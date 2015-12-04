@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response
 
 # Create your views here.
 from django.contrib.auth.models import User, Group
@@ -20,3 +20,11 @@ class GroupViewSet(viewsets.ModelViewSet):
   """
   queryset = Group.objects.all()
   serializer_class = GroupSerializer
+
+
+
+
+def test(request):
+  return render_to_response('index.html')
+
+
