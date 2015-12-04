@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'login_app',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -58,6 +59,8 @@ ROOT_URLCONF = 'fynd.urls'
 
 WSGI_APPLICATION = 'fynd.wsgi.application'
 
+TEMPLATE_PATH = os.path.join(BASE_DIR, 'templates')
+TEMPLATE_DIRS = (TEMPLATE_PATH,)
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
