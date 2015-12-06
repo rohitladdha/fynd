@@ -19,7 +19,7 @@ GET http://10.1.6.24:8000/auth/sample_view
 GET http://10.1.6.24:8000/auth/login
 
 ##Matching Apis
-login required
+login required    
 http://10.1.6.24:8000/match/get_intersection?size=1&lat1=19.107554&lon1=72.896517&range1=10&range_type1=time
 
 
