@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+
+  <!-- Optional theme -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css">
+
+  <!-- Latest compiled and minified JavaScript -->
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <title>Fynd</title>
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 100%;
+      }
+      #floating-panel {
+        position: absolute;
+        top: 10px;
+        left: 25%;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+        text-align: center;
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+        padding-left: 10px;
+      }
+
+    </style>
+  </head>
+  <body>
+    <script type="text/javascript" src="js/marker.js"></script>
+
+    <div id="floating-panel">
+      <input onclick="clearMarkers();" type=button value="Hide Markers">
+      <input onclick="deleteMarkers();" type=button value="Delete Markers">
+    </div>
+
+    <p>
+      <div id="user_input">
+            <div class="navbar navbar-default navbar-fixed-top">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#">Sitename</a>
+                    </div>
+                    <center>
+                        <div class="navbar-collapse collapse" id="navbar-main">
+                            <form class="navbar-form navbar-right" role="search">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="travel_time" placeholder="Travel Time">
+                                </div>
+                                <button type="submit" class="btn btn-default" id="submit_preference" onClick="send_preference()">Fynd !</button>
+                            </form>
+                        </div>
+                    </center>
+                </div>
+          </div>
+      </div>
+    </p>
+
+    <p>
+      <div id="map"></div>
+    </p>
+
+    <p>Click on the map to add markers.</p>
+    
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-Gjijo9Z5AJ2ivwSu4kurEEW9g4C2PKs&signed_in=true&callback=initMap"></script>
+  </body>
+</html>

@@ -1,3 +1,3 @@
 [submodule "matching_app/matching_engine"]
 	path = matching_app/matching_engine
-	url = git@github.com:mudit3774/fynd-matching-engine.git
+	url = https://github.com/mudit3774/fynd-matching-engine.git

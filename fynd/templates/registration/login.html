@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<!-- <html>
+<head>
+    <title>I am here</title>
+</head>
+<body>
+<p>thats why you are here</p>
+
+</body>
+</html> -->
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if form.errors %}
+<p>Your username and password didn't match. Please try again.</p>
+{% endif %}
+
+{% if next %}
+    {% if user.is_authenticated %}
+    <p>Your account doesn't have access to this page. To proceed,
+    please login with an account that has access.</p>
+    {% else %}
+    <p>Please login to see this page.</p>
+    {% endif %}
+{% endif %}
+
+
+{# Assumes you setup the password_reset view in your URLconf #}
+
+<script>
+    $( "#login" ).bind( "click", function() 
+    {
+      $('#id_username').val('');
+      $('#id_password').val('');
+
+    });
+</script>
+
+<form id="login_form" method="post" action="{% url 'django.contrib.auth.views.login' %}">
+    {% csrf_token %}
+    <div class="container">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" placeholder="" id="id_username" class="form-control" placeholder="Username" />
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" placeholder="" id="id_password" class="form-control" placeholder="Password" />
+        </div>
+        
+            <button class="btn btn-block btn-danger btn-lg" id="login">Login</button>
+            <button class="btn btn-block btn-danger btn-lg" id="clear_form">Clear All</button>
+    </div>
+</form>
+
+{% endblock %}

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response
 
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
@@ -47,5 +47,9 @@ def logout_view(request):
   logout(request)
   resp_hash = {"status": "logged out"}
   return HttpResponse(json.dumps(resp_hash), content_type="application/json")
+
+
+def test(request):
+  return render_to_response('preference_form.html')
 
   # Redirect to a success page.
