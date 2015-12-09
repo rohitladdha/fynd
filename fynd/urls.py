@@ -8,4 +8,5 @@ urlpatterns = patterns('',
   url(r'^accounts/profile/$', auth_views.login),
   url(r'^auth/', include('login_app.urls')),
   url(r'^match/', include('matching_app.urls')),
+  url(r'^',views.landing, name='landing_page'),
 )

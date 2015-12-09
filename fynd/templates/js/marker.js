@@ -53,9 +53,6 @@ function deleteMarkers() {
 }
 
 
-
-
-
 function send_preference()
 {
 	var url = "";
@@ -64,33 +61,38 @@ function send_preference()
 	var time = document.getElementById('travel_time');
 
 	$.ajax({
-		        type: "GET",
-		        url: "http://10.1.6.24:8000/match/get_intersection",
-		        data: {
-		            'size': 1,
-		            'lat1': lat,
-		            'lon1': lng,
-		            'range1': parseInt(time),
-		            'range_type1':'time'
-		        },
-		        success: function (data) {
-		            console.log('Ajax success');
-		            var i =0;
-
-		            console.log(data);
-
-		            for(var key in data)
-		            {
-		                new_html += '<option value="' + key + '">' + data[key] + '</option>';
-		            }
-		            
-		            $('#select_locality').html(new_html);
-		            $('#select_locality').selectpicker('refresh');
-		            $('#overlay').hide();
+	        type: "GET",
+	        url: "http://10.1.6.24:8000/match/get_intersection",
+	        data: {
+	            'size': 1,
+	            'lat1': lat,
+	            'lon1': lng,
+	            'range1': parseInt(time),
+	            'range_type1':'time'
+	        },
+	        success: function (data) {
+	            var json = JSON.parse(data);
+	            var triangleCoords = [];
+	            var coords = json[0][0];
+	            
+	            for(i=0;i<coords.length;i++)
+	            {
+	            	var coord_dict = {'lat': coords[i][0],'lng':coords[i][1]}
+	            	triangleCoords.push(coord_dict);
+	            }
+	            
+	            var polygon = new google.maps.Polygon({
+					    paths: triangleCoords,
+					    strokeColor: '#FF0000',
+					    strokeOpacity: 0.8,
+					    strokeWeight: 2,
+					    fillColor: '#FF0000',
+					    fillOpacity: 0.35
+					  });
+					  polygon.setMap(map);
 		        },
 		        error: function (err) {
 		            console.log("Ajax: Get error for localities:", err);
-		            $('#overlay').hide();
 		        }
             });
 }

@@ -52,4 +52,9 @@ def logout_view(request):
 def test(request):
   return render_to_response('preference_form.html')
 
+
+
+def landing(request):
+  return render_to_response('home.html')
+
   # Redirect to a success page.

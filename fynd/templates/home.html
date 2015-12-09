@@ -1,0 +1,29 @@
+
+{% extends 'base.html' %}
+{% block landing %}
+<script type="text/javascript">
+    function redirect_login()
+    {
+        location.href = "/auth/login";
+    };
+</script>
+
+<div class="container-full">
+    <div class="row">
+        <div class="col-lg-12 text-center v-center">
+             <h1 class="" contenteditable="false">Fynd</h1>
+
+            <p class="lead"></p>
+            <br class="">
+            <br class="">
+            <br class="">
+            <form class="col-lg-12">
+                <div class="input-group" style="width:340px;text-align:center;margin:0 auto;">
+                    <button class="btn btn-lg btn-primary" id ="home_login" type="button" onclick="redirect_login()">Login</button></span>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

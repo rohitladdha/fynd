@@ -2,6 +2,10 @@
 <html>
   <head>
     <link rel="stylesheet" href="style.css" />
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
 
   <!-- Optional theme -->
@@ -36,7 +40,108 @@
     </style>
   </head>
   <body>
-    <script type="text/javascript" src="js/marker.js"></script>
+    <script type="text/javascript">
+    var map;
+    var markers = [];
+    var location_details;
+
+    function initMap() {
+      var default_location = {lat: 19.115529, lng: 72.86};
+
+      map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 12,
+        center: default_location,
+        mapTypeId: google.maps.MapTypeId.TERRAIN
+      });
+
+      // This event listener will call addMarker() when the map is clicked.
+      map.addListener('click', function(event) {
+        
+        addMarker(event.latLng);
+      });
+
+      // Adds a marker at the center of the map.
+      addMarker(default_location);
+    }
+
+    // Adds a marker to the map and push to the array.
+    function addMarker(location) {
+      location_details = location;
+      clearMarkers();
+      markers = [];
+      var marker = new google.maps.Marker({
+        position: location,
+        map: map
+      });
+      markers.push(marker);
+    }
+
+    // Sets the map on all markers in the array.
+    function setMapOnAll(map) {
+      for (var i = 0; i < markers.length; i++) {
+        markers[i].setMap(map);
+      }
+    }
+
+    // Removes the markers from the map, but keeps them in the array.
+    function clearMarkers() {
+      setMapOnAll(null);
+    }
+
+    // Shows any markers currently in the array.
+    function showMarkers() {
+      setMapOnAll(map);
+    }
+
+    // Deletes all markers in the array by removing references to them.
+    function deleteMarkers() {
+      clearMarkers();
+      markers = [];
+    }
+
+
+    function send_preference()
+    {
+    
+      var lat = location_details['lat'];
+      var lng = location_details['lng'];
+      var time = parseInt(document.getElementById('travel_time').value);
+      var URL = "http://10.1.6.24:8000/match/get_intersection?size=1&lat1="+lat+"&lon1="+lng+"7&range1="+time+"&range_type1=time";
+      
+      
+      $.ajax({
+              type: "GET",
+              url: URL,
+              data : 'jsonp',
+              success: function (data) {
+                  console.log('hello');
+                  var json = JSON.parse(data);
+                  var triangleCoords = [];
+                  var coords = json[0][0];
+                  
+                  for(i=0;i<coords.length;i++)
+                  {
+                    var coord_dict = {'lat': coords[i][0],'lng': coords[i][1]};
+                    triangleCoords.push(coord_dict);
+                  }
+                  
+                  var polygon = new google.maps.Polygon({
+                  paths: triangleCoords,
+                  strokeColor: '#FF0000',
+                  strokeOpacity: 0.8,
+                  strokeWeight: 2,
+                  fillColor: '#FF0000',
+                  fillOpacity: 0.35
+                });
+                polygon.setMap(map);
+                },
+                error: function (err) {
+                    console.log("Ajax: Get error for localities:", err);
+                }
+            });
+    }
+
+</script>
 
     <div id="floating-panel">
       <input onclick="clearMarkers();" type=button value="Hide Markers">
@@ -49,9 +154,6 @@
                 <div class="container">
                     <div class="navbar-header">
                         <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
                         </button>
                         <a class="navbar-brand" href="#">Sitename</a>
                     </div>
